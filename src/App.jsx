@@ -6,7 +6,7 @@ import {useStore} from './store.js'
 
 const F=({l,e,...p})=>(<><label>{l}</label><input {...p}/>{e&&<div className="err">{e}</div>}</>)
 const Check=()=>(<svg className="chk" viewBox="0 0 96 96" width="96" height="96" aria-hidden="true"><rect x="10" y="10" width="76" height="76" rx="24" fill="var(--y)" transform="rotate(-8 48 48)"/><path className="ck" d="M30 50l12 12 24-26" fill="none" stroke="#10263b" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/></svg>)
-const TEAM=[['claude.ai','Hamkor'],['Abduvohidov Ibrohim','Loyiha rahbari'],['Abduvohidov Ibrohim','Dasturchi'],['Abduvohidov Ibrohim','Dizayner']]
+const TEAM=[['Abduvohidov Ibrohim','Loyiha rahbari'],['Abduvohidov Ibrohim','Dasturchi'],['Abduvohidov Ibrohim','Dizayner']]
 const FAQ=[['Buyurtmani qanday beraman?','Ustani tanlang, xizmat, manzil va bo‘sh vaqtni belgilang. Usta buyurtmani qabul qilgach, holatini kabinetda kuzatasiz.'],['Usta band bo‘lsa-chi?','Band vaqtlar ro‘yxatda o‘chirilgan holda ko‘rinadi, shuning uchun bir vaqtga ikki kishi buyurtma bera olmaydi.'],['Narx qanday aniqlanadi?','Narx — ustaning e’lon qilgan xizmat narxi. Yakuniy tafsilotlarni usta bilan chatda kelishib olasiz.'],['Usta bilan qanday gaplashaman?','Usta kartasidagi “Xabar yozish” yoki buyurtmadagi “Chat” tugmasi orqali.'],['Usta sifatida qanday qo‘shilaman?','“Ro‘yxatdan o‘tish” bo‘limida “Men ustaman” ni tanlab, kasbingiz va narxlaringizni kiriting.']]
 const Badge=({s})=><span className={'bd s'+s}>{ST[s]}</span>
 const Rate=({m})=>m.r?<>★ {m.r}</>:<>Yangi</>
