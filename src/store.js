@@ -27,7 +27,7 @@ export function useStore(){
  const toast=m=>{setT(m);setTimeout(()=>setT(''),2200)}
  const me=users.find(u=>u.id===sid)||null
  const masters=users.filter(u=>u.role==='master').map(u=>{const p=u.profile,rv=orders.filter(o=>o.mid===u.id&&o.review);
-  return {id:u.id,name:u.name,job:p.job,c:p.c,p:p.price,x:p.exp,a:p.area,s:p.services,g:p.gallery||[],rv,r:rv.length?+(rv.reduce((a,o)=>a+o.review.stars,0)/rv.length).toFixed(1):p.rating}})
+  return {id:u.id,name:u.name,job:p.job,c:p.c,p:p.price,x:p.exp,a:p.area,s:p.services,g:p.gallery||[],ph:p.photo||'',rv,r:rv.length?+(rv.reduce((a,o)=>a+o.review.stars,0)/rv.length).toFixed(1):p.rating}})
  const upd=(id,fn)=>setOrders(orders.map(o=>o.id===id?fn(o):o))
  const unread=me?msgs.filter(x=>x.from!==me.role&&!x.read&&(me.role==='client'?x.cid===me.id:x.mid===me.id)).length:0
  return {users,orders,me,masters,t,toast,msgs,th,setTh,unread,
@@ -43,7 +43,7 @@ export function useStore(){
    const T=['Juda tez va sifatli ishladi, rahmat!','Narxi aytilgandek, ish toza.','Vaqtida keldi, tavsiya qilaman.','Muammo bir zumda hal bo‘ldi.','Yaxshi usta, albatta yana murojaat qilaman.'],A=['Chilonzor, 7-kvartal','Yunusobod, 12-mavze','Mirobod, Shevchenko ko‘chasi','Sergeli, 5-uy']
    const base=Date.now(),day=n=>dstr(new Date(base+n*864e5)),out=[]
    ms.forEach((m,i)=>{const sv=m.profile.services
-    for(let k=0;k<4;k++){const s=sv[(i+k)%sv.length];out.push({id:base+i*100+k,demo:true,cid:cl.id,cname:cl.name,cphone:cl.phone,mid:m.id,at:base-2*864e5,status:2,svc:s[0],price:s[1],problem:'Demo buyurtma',address:A[(i+k)%4],time:day(-((i+k*2)%7))+'T'+SLOTS[(i+k)%8],review:{stars:(i+k)%5===4?4:5,text:T[(i+k)%5],by:cl.name,at:base-2*864e5}})}
+    for(let k=0;k<4;k++){const s=sv[(i+k)%sv.length];out.push({id:base+i*100+k,demo:true,cid:cl.id,cname:cl.name,cphone:cl.phone,mid:m.id,at:base-2*864e5,paid:(i<2&&k===0)?undefined:'Payme',status:2,svc:s[0],price:s[1],problem:'Demo buyurtma',address:A[(i+k)%4],time:day(-((i+k*2)%7))+'T'+SLOTS[(i+k)%8],review:{stars:(i+k)%5===4?4:5,text:T[(i+k)%5],by:cl.name,at:base-2*864e5}})}
     if(i<3){const s=sv[0];out.push({id:base+i*100+50,demo:true,cid:cl.id,cname:cl.name,cphone:cl.phone,mid:m.id,status:0,svc:s[0],price:s[1],problem:'Demo: tezroq kelsangiz yaxshi bo‘lardi',address:A[i],time:day(1)+'T'+SLOTS[2]});out.push({id:base+i*100+51,demo:true,cid:cl.id,cname:cl.name,cphone:cl.phone,mid:m.id,status:1,svc:s[0],price:s[1],problem:'Demo: qabul qilingan buyurtma',address:A[i+1],time:day(2)+'T'+SLOTS[4]})}})
    setOrders([...orders.filter(o=>!o.demo),...out])
    const mk=(mid,arr)=>arr.map(([from,text,read],j)=>({id:base+Math.random(),demo:true,cid:cl.id,mid,from,text,t:base-(arr.length-j)*6e4*7,read}))
@@ -72,5 +72,5 @@ export function useStore(){
   setStatus:(id,s)=>{upd(id,o=>({...o,status:s,at:Date.now()}));toast('Holat: '+ST[s])},
   review:(id,stars,text)=>{upd(id,o=>({...o,review:{stars,text,by:o.cname,at:Date.now()}}));toast('Sharh qoldirildi')},
   saveUser:(id,p)=>{setUsers(users.map(u=>u.id===id?{...u,...p}:u));toast('Saqlandi')},
-  saveProfile:(id,p)=>{setUsers(users.map(u=>u.id===id?{...u,profile:{...u.profile,...p}}:u));toast('Profil saqlandi')}}
+  saveProfile:(id,p,msg)=>{setUsers(users.map(u=>u.id===id?{...u,profile:{...u.profile,...p}}:u));toast(msg||'Profil saqlandi')}}
 }

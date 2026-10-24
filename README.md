@@ -12,3 +12,5 @@ Ikki tomonlama demo: bitta brauzerda ikkita oyna (tab) oching. Birinchisida mijo
 
 
 Yangi: band vaqtni tanlab bo‘lmaydi (sana + soatlik slotlar), tungi rejim (tepada ☾), mijoz-usta chat (Xabarlar). Demo ustalar (Aziz va b.) birinchi xabarga avto-javob beradi.
+
+v13 yangiliklari: SVG rasmlar (hero, kasb ikonkalari), scroll animatsiyalari + progress chiziq, aylana bo'lib ochiladigan tungi rejim (View Transitions), maxsus kursor (faqat sichqoncha qurilmalarida), usta profil rasmi (yuklash / qirqish / almashtirish / o'chirish; rasm bo'lmasa ism-familiya bosh harflari), saytga mos demo usta tanlagich. Yangi fayl: src/extras.jsx.
