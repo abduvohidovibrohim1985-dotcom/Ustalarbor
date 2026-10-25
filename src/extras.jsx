@@ -1,4 +1,5 @@
 import {useState,useEffect,useLayoutEffect,useRef} from 'react'
+import {t as tr,LANGS} from './i18n.js'
 
 /* ---------- umumiy yordamchilar ---------- */
 const html=()=>document.documentElement
@@ -7,8 +8,8 @@ export const ini=n=>String(n).split(' ').filter(Boolean).map(w=>w[0]).join('').s
 
 /* Avatar: rasm bo'lsa rasm, bo'lmasa ism-familiya bosh harflari */
 export const Av=({m})=>m.ph
- ?<img className="pimg" src={m.ph} alt={m.name} draggable="false"/>
- :<div className="mono" style={{background:m.c}}><span>{ini(m.name)}</span></div>
+ ?<img className="pimg" src={m.ph} alt={tr(m.name)} draggable="false"/>
+ :<div className="mono" style={{background:m.c}}><span>{ini(tr(m.name))}</span></div>
 
 /* ---------- ikonkalar (24x24, navy chiziq) ---------- */
 const P={
@@ -33,6 +34,7 @@ const P={
  trash:<><path d="M4 7h16M10 11v6M14 11v6"/><path d="M6 7l1 13h10l1-13M9 7V4h6v3"/></>,
  crop:<><path d="M6 2v16h16M2 6h16v16"/></>,
  chev:<path d="M6 9l6 6 6-6"/>,
+ check:<path d="M5 12.5l4.5 4.5L19 7"/>,
  user:<><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></>,
  users:<><circle cx="9" cy="8" r="3.6"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.6 3.6 0 0 1 0 6.8M18 14a6.5 6.5 0 0 1 3.5 6"/></>
 }
@@ -43,7 +45,7 @@ export const jobIcon=j=>{const t=String(j||'').toLowerCase();return (JMAP.find((
 export const JobIcon=({job,s=22,sw})=><Ic n={jobIcon(job)} s={s} sw={sw}/>
 
 /* ---------- Hero / Auth rasmi: uy + asboblar ---------- */
-export const HeroArt=({className=''})=>(<svg className={'art '+className} viewBox="0 0 440 300" role="img" aria-label="Uy va usta asboblari">
+export const HeroArt=({className=''})=>(<svg className={'art '+className} viewBox="0 0 440 300" role="img" aria-label={tr('Uy va usta asboblari')}>
  <ellipse cx="226" cy="275" rx="196" ry="13" fill="#10263b" opacity=".16"/>
  <g className="a-spark" fill="#10263b"><path d="M46 56l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/><path d="M398 40l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><circle cx="392" cy="130" r="4"/><circle cx="40" cy="120" r="3.5"/></g>
  <rect x="276" y="44" width="34" height="56" fill="#10263b"/>
@@ -135,7 +137,7 @@ export function Cursor(){
 }
 
 /* ---------- Kunduzgi / tungi rejim tugmasi ---------- */
-export const ThemeToggle=({dk,flip})=>(<button className={'tg th-t'+(dk?' dk':'')} onClick={flip} aria-label="Tungi rejimni almashtirish" aria-pressed={dk} title="Tungi / kunduzgi rejim">
+export const ThemeToggle=({dk,flip})=>(<button className={'tg th-t'+(dk?' dk':'')} onClick={flip} aria-label={tr('Tungi rejimni almashtirish')} aria-pressed={dk} title={tr('Tungi / kunduzgi rejim')}>
  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
   <g className="moon"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="currentColor" fillOpacity=".15"/></g>
   <g className="sun"><circle cx="12" cy="12" r="4" fill="currentColor" fillOpacity=".2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></g>
@@ -151,10 +153,10 @@ export function MasterPicker({list,onPick}){
   return()=>{clearTimeout(sc);removeEventListener('pointerdown',f);removeEventListener('keydown',k)}},[o])
  return(<div className={'mpk'+(o?' open':'')} ref={ref}>
   <button type="button" className="mpk-b" aria-haspopup="listbox" aria-expanded={o} onClick={()=>setO(!o)}>
-   <span className="mpk-ic"><Ic n="users" s={18}/></span><span className="mpk-t"><b>Boshqa usta sifatida kirish</b><small>{list.length} ta demo usta</small></span><Ic n="chev" s={18} className="mpk-c"/></button>
-  {o&&<div className="mpk-p" role="listbox" aria-label="Demo ustalar">{list.map((m,i)=>(
+   <span className="mpk-ic"><Ic n="users" s={18}/></span><span className="mpk-t"><b>{tr('Boshqa usta sifatida kirish')}</b><small>{tr('{n} ta demo usta',{n:list.length})}</small></span><Ic n="chev" s={18} className="mpk-c"/></button>
+  {o&&<div className="mpk-p" role="listbox" aria-label={tr('Demo ustalar')}>{list.map((m,i)=>(
    <button type="button" role="option" key={m.id} style={{'--i':i}} onClick={()=>{setO(false);onPick(m)}}>
-    <span className="mpk-av"><Av m={m}/></span><span className="mpk-n"><b>{m.name}</b><small><JobIcon job={m.job} s={13}/> {m.job}</small></span><span className="mpk-go">→</span></button>))}</div>}
+    <span className="mpk-av"><Av m={m}/></span><span className="mpk-n"><b>{tr(m.name)}</b><small><JobIcon job={m.job} s={13}/> {tr(m.job)}</small></span><span className="mpk-go">→</span></button>))}</div>}
  </div>)
 }
 
@@ -175,31 +177,31 @@ function Cropper({src,onSave,onCancel,onOther}){
  const nudge=e=>{const st=12,m={ArrowLeft:[st,0],ArrowRight:[-st,0],ArrowUp:[0,st],ArrowDown:[0,-st]}[e.key];if(m){e.preventDefault();setO(p=>clamp({x:p.x+m[0],y:p.y+m[1]},z))}}
  const save=()=>{const c=document.createElement('canvas');c.width=c.height=OUT;paint(c,OUT,o,z);onSave(c.toDataURL('image/jpeg',.88))}
  return(<div className="ov" onClick={e=>e.target===e.currentTarget&&onCancel()}><div className="md crm" role="dialog" aria-modal="true" aria-label="Rasmni sozlash">
-  <div className="mb" style={{paddingTop:22}}><div style={{display:'flex',alignItems:'center'}}><h2 style={{margin:0}}>Rasmni sozlang</h2><button className="x" onClick={onCancel} aria-label="Yopish">✕</button></div>
-  <p className="sub" style={{margin:'6px 0 14px'}}>Suring va kattalashtiring — doira ichidagi qism profilingizda ko‘rinadi.</p>
-  <div className="crp" data-cur="" tabIndex={0} onKeyDown={nudge} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} aria-label="Rasmni surish uchun sudrang yoki strelka tugmalarini bosing">
-   <canvas ref={cv} width={SZ} height={SZ}/>{!img&&<div className="crp-l">Yuklanmoqda…</div>}</div>
-  <div className="crz"><span aria-hidden="true">−</span><input type="range" min="1" max="3" step="0.01" value={z} onChange={e=>zoom(+e.target.value)} aria-label="Kattalashtirish"/><span aria-hidden="true">+</span></div>
-  <div className="row"><button className="btn g" onClick={onOther}>Boshqa rasm</button><button className="btn y" onClick={save} disabled={!img}>Saqlash</button></div></div></div></div>)
+  <div className="mb" style={{paddingTop:22}}><div style={{display:'flex',alignItems:'center'}}><h2 style={{margin:0}}>{tr('Rasmni sozlang')}</h2><button className="x" onClick={onCancel} aria-label={tr('Yopish')}>✕</button></div>
+  <p className="sub" style={{margin:'6px 0 14px'}}>{tr('Suring va kattalashtiring — doira ichidagi qism profilingizda ko‘rinadi.')}</p>
+  <div className="crp" data-cur="" tabIndex={0} onKeyDown={nudge} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} aria-label={tr('Rasmni surish uchun sudrang yoki strelka tugmalarini bosing')}>
+   <canvas ref={cv} width={SZ} height={SZ}/>{!img&&<div className="crp-l">{tr('Yuklanmoqda…')}</div>}</div>
+  <div className="crz"><span aria-hidden="true">−</span><input type="range" min="1" max="3" step="0.01" value={z} onChange={e=>zoom(+e.target.value)} aria-label={tr('Kattalashtirish')}/><span aria-hidden="true">+</span></div>
+  <div className="row"><button className="btn g" onClick={onOther}>{tr('Boshqa rasm')}</button><button className="btn y" onClick={save} disabled={!img}>{tr('Saqlash')}</button></div></div></div></div>)
 }
 
 export function PhotoEditor({m,S}){
  const [src,setSrc]=useState(null),[ask,setAsk]=useState(false),[hov,setHov]=useState(false),inp=useRef()
- const pick=f=>{if(!f)return;if(!/^image\//.test(f.type))return S.toast('Faqat rasm fayli tanlang');if(f.size>25e6)return S.toast('Rasm juda katta (25 MB gacha)')
+ const pick=f=>{if(!f)return;if(!/^image\//.test(f.type))return S.toast(tr('Faqat rasm fayli tanlang'));if(f.size>25e6)return S.toast(tr('Rasm juda katta (25 MB gacha)'))
   const r=new FileReader();r.onload=()=>setSrc(r.result);r.readAsDataURL(f)}
- const save=d=>{S.saveProfile(m.id,{photo:d},'Profil rasmi yangilandi');setSrc(null)}
- const del=()=>{S.saveProfile(m.id,{photo:''},'Rasm o‘chirildi — bosh harflar ko‘rsatiladi');setAsk(false)}
+ const save=d=>{S.saveProfile(m.id,{photo:d},tr('Profil rasmi yangilandi'));setSrc(null)}
+ const del=()=>{S.saveProfile(m.id,{photo:''},tr('Rasm o‘chirildi — bosh harflar ko‘rsatiladi'));setAsk(false)}
  return(<div className="box phb" style={{gridColumn:'1/-1'}}>
   <div className={'phb-av'+(hov?' dz':'')} onDragOver={e=>{e.preventDefault();setHov(true)}} onDragLeave={()=>setHov(false)} onDrop={e=>{e.preventDefault();setHov(false);pick(e.dataTransfer.files[0])}}>
    <div className="phb-c" data-cur=""><Av m={m}/></div>
-   <button type="button" className="phb-cam" aria-label={m.ph?'Rasmni almashtirish':'Rasm yuklash'} onClick={()=>inp.current.click()}><Ic n="camera" s={18}/></button></div>
-  <div className="phb-t"><h3 style={{margin:0}}>Profil rasmi</h3>
-   <p className="sub" style={{margin:'4px 0 12px'}}>{m.ph?'Rasmingiz mijozlarga kartangizda va profilingizda ko‘rinadi.':'Rasm qo‘ymasangiz, ism-familiyangizning bosh harflari ko‘rinadi.'} Rasmni bu yerga tashlab ham yuklashingiz mumkin.</p>
+   <button type="button" className="phb-cam" aria-label={tr(m.ph?'Rasmni almashtirish':'Rasm yuklash')} onClick={()=>inp.current.click()}><Ic n="camera" s={18}/></button></div>
+  <div className="phb-t"><h3 style={{margin:0}}>{tr('Profil rasmi')}</h3>
+   <p className="sub" style={{margin:'4px 0 12px'}}>{tr(m.ph?'Rasmingiz mijozlarga kartangizda va profilingizda ko‘rinadi.':'Rasm qo‘ymasangiz, ism-familiyangizning bosh harflari ko‘rinadi.')} {tr('Rasmni bu yerga tashlab ham yuklashingiz mumkin.')}</p>
    <div className="phb-b">
-    <button className="btn y sm" onClick={()=>inp.current.click()}><Ic n="camera" s={16}/>{m.ph?'Rasmni almashtirish':'Rasm yuklash'}</button>
-    {m.ph&&<button className="btn g sm" onClick={()=>setSrc(m.ph)}><Ic n="crop" s={16}/>Qirqish</button>}
-    {m.ph&&!ask&&<button className="btn g sm phb-del" onClick={()=>setAsk(true)}><Ic n="trash" s={16}/>O‘chirish</button>}
-    {ask&&<span className="phb-ask">O‘chirilsinmi? <button className="btn no sm" onClick={del}>Ha, o‘chir</button><button className="btn g sm" onClick={()=>setAsk(false)}>Yo‘q</button></span>}</div></div>
+    <button className="btn y sm" onClick={()=>inp.current.click()}><Ic n="camera" s={16}/>{tr(m.ph?'Rasmni almashtirish':'Rasm yuklash')}</button>
+    {m.ph&&<button className="btn g sm" onClick={()=>setSrc(m.ph)}><Ic n="crop" s={16}/>{tr('Qirqish')}</button>}
+    {m.ph&&!ask&&<button className="btn g sm phb-del" onClick={()=>setAsk(true)}><Ic n="trash" s={16}/>{tr('O‘chirish')}</button>}
+    {ask&&<span className="phb-ask">{tr('O‘chirilsinmi?')} <button className="btn no sm" onClick={del}>{tr('Ha, o‘chir')}</button><button className="btn g sm" onClick={()=>setAsk(false)}>{tr('Yo‘q')}</button></span>}</div></div>
   <input ref={inp} type="file" accept="image/*" hidden onChange={e=>{pick(e.target.files[0]);e.target.value=''}}/>
   {src&&<Cropper src={src} onSave={save} onCancel={()=>setSrc(null)} onOther={()=>{setSrc(null);inp.current.click()}}/>}
  </div>)
@@ -209,6 +211,28 @@ export function PhotoEditor({m,S}){
 export function FilePick({onFiles,multiple,label='Rasm yuklash',hint}){
  const r=useRef(),[n,setN]=useState(0)
  return(<div className="fp"><input ref={r} type="file" accept="image/*" multiple={multiple} hidden onChange={async e=>{const f=[...e.target.files];setN(f.length);await onFiles(f);e.target.value='';setN(0)}}/>
-  <button type="button" className="btn y sm" onClick={()=>r.current.click()}><Ic n="camera" s={16}/>{label}</button>
-  <span className="fp-h">{hint||(multiple?'Bir nechta rasm tanlash mumkin':'Rasm tanlanmagan')}</span></div>)
+  <button type="button" className="btn y sm" onClick={()=>r.current.click()}><Ic n="camera" s={16}/>{tr(label)}</button>
+  <span className="fp-h">{tr(hint||(multiple?'Bir nechta rasm tanlash mumkin':'Rasm tanlanmagan'))}</span></div>)
+}
+
+/* ---------- Til tanlash (bayroqli dropdown) ---------- */
+const FL={
+ uz:<><rect width="28" height="20" fill="#fff"/><rect width="28" height="6.4" fill="#0099B5"/><rect y="6.4" width="28" height=".9" fill="#CE1126"/><rect y="12.7" width="28" height=".9" fill="#CE1126"/><rect y="13.6" width="28" height="6.4" fill="#1EB53A"/><circle cx="5" cy="3.2" r="2.1" fill="#fff"/><circle cx="5.8" cy="3.2" r="1.8" fill="#0099B5"/><g fill="#fff"><circle cx="9.2" cy="1.5" r=".42"/><circle cx="11" cy="1.5" r=".42"/><circle cx="12.8" cy="1.5" r=".42"/><circle cx="8.3" cy="3.2" r=".42"/><circle cx="10.1" cy="3.2" r=".42"/><circle cx="11.9" cy="3.2" r=".42"/><circle cx="13.7" cy="3.2" r=".42"/><circle cx="9.2" cy="4.9" r=".42"/><circle cx="11" cy="4.9" r=".42"/><circle cx="12.8" cy="4.9" r=".42"/></g></>,
+ ru:<><rect width="28" height="20" fill="#fff"/><rect y="6.67" width="28" height="6.67" fill="#0039A6"/><rect y="13.34" width="28" height="6.66" fill="#D52B1E"/></>,
+ en:<><rect width="28" height="20" fill="#012169"/><path d="M0 0L28 20M28 0L0 20" stroke="#fff" strokeWidth="3.4"/><path d="M0 0L28 20M28 0L0 20" stroke="#C8102E" strokeWidth="1.2"/><path d="M14 0V20M0 10H28" stroke="#fff" strokeWidth="6"/><path d="M14 0V20M0 10H28" stroke="#C8102E" strokeWidth="3.4"/></>
+}
+export const Flag=({c,w=26})=>(<svg className="flag" viewBox="0 0 28 20" width={w} height={w*20/28} aria-hidden="true">{FL[c]}</svg>)
+export function LangSwitch({lang,set}){
+ const [o,setO]=useState(false),ref=useRef()
+ useEffect(()=>{if(!o)return
+  const f=e=>{if(!ref.current?.contains(e.target))setO(false)},k=e=>e.key==='Escape'&&setO(false)
+  addEventListener('pointerdown',f);addEventListener('keydown',k)
+  return()=>{removeEventListener('pointerdown',f);removeEventListener('keydown',k)}},[o])
+ return(<div className={'lg'+(o?' open':'')} ref={ref}>
+  <button type="button" className="lg-b" aria-haspopup="listbox" aria-expanded={o} aria-label={tr('Til')+': '+LANGS.find(l=>l.c===lang).n} onClick={()=>setO(!o)}>
+   <Flag c={lang}/><span className="lg-c">{lang.toUpperCase()}</span><Ic n="chev" s={14} className="lg-ch"/></button>
+  {o&&<div className="lg-p" role="listbox" aria-label={tr('Til')}>{LANGS.map((l,i)=>(
+   <button type="button" role="option" key={l.c} aria-selected={l.c===lang} lang={l.c} className={l.c===lang?'on':''} style={{'--i':i}} onClick={()=>{setO(false);set(l.c)}}>
+    <Flag c={l.c} w={30}/><span className="lg-n">{l.n}</span>{l.c===lang&&<Ic n="check" s={18} sw={2.6}/>}</button>))}</div>}
+ </div>)
 }

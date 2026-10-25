@@ -359,3 +359,28 @@ select:hover{border-color:var(--y)}
 @media(prefers-reduced-motion:reduce){[data-r]{opacity:1!important;transform:none!important}.sp{display:none}.cu-r i,.cu-d i{transition:none}}
 @media(max-width:420px){.dq{grid-template-columns:1fr}}
 .fp{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.fp .btn{display:inline-flex;align-items:center;gap:7px}.fp-h{color:var(--mut);font-size:13px}
+
+/* --- til tanlagich --- */
+.flag{display:block;border-radius:4px;box-shadow:0 0 0 1px #0002;flex:none}
+.lg{position:relative;flex:none}
+.lg-b{display:flex;align-items:center;gap:7px;height:38px;padding:0 10px 0 9px;border:1.5px solid var(--line);background:none;border-radius:20px;color:var(--ink);font-weight:800;font-size:13px;transition:border-color .2s,transform .2s}
+.lg-b:hover,.lg.open .lg-b{border-color:var(--y)}
+.lg-ch{color:var(--mut);transition:transform .3s}.lg.open .lg-ch{transform:rotate(180deg)}
+.lg-p{position:absolute;right:0;top:calc(100% + 10px);width:210px;background:var(--card);border:1.5px solid var(--line);border-radius:18px;box-shadow:0 20px 44px -14px #000a;padding:6px;z-index:40;transform-origin:top right;animation:lgp .24s cubic-bezier(.2,.8,.3,1)}
+@keyframes lgp{from{opacity:0;transform:translateY(-8px) scale(.96)}}
+.lg-p button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;border-radius:12px;padding:10px;text-align:left;font-weight:700;font-size:15px;animation:mpi .35s ease backwards;animation-delay:calc(var(--i)*40ms);transition:background .15s}
+.lg-p button:hover,.lg-p button:focus-visible{background:var(--bg)}
+.lg-p button.on{background:var(--bg);font-weight:800}
+.lg-n{flex:1}.lg-p button.on svg:last-child{color:var(--ok)}
+@media(max-width:420px){.lg-c{display:none}.lg-b{padding:0 8px}}
+
+/* Toshkent manzil tanlash xaritasi */
+.address-map-wrap{margin:8px 0 14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.address-map{height:300px;width:100%;z-index:1}
+.map-help{margin:0 0 8px;font-size:13px}
+.map-status{padding:9px 12px;font-size:13px;color:var(--mut);border-top:1px solid var(--line);line-height:1.45}
+.map-status.loading{color:var(--blue)}
+.address-map-wrap .leaflet-container{font:inherit}
+@media(max-width:560px){.address-map{height:250px}}
+
+.address-map-wrap,.route-wrap{margin:10px 0 14px}.address-map,.route-map{height:300px;width:100%;border-radius:16px;border:1px solid var(--line);z-index:1}.route-map{height:260px}.map-status{font-size:12px;color:var(--mut);padding:7px 2px}.route-card{margin-top:12px;padding:12px;background:var(--bg);border-radius:14px}.route-card>b{display:block;margin-bottom:5px}.map-selected{display:block;color:var(--ok);margin-top:6px}@media(max-width:600px){.address-map,.route-map{height:240px}}
